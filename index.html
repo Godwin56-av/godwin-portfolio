@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Godwin Ebuka | Web Developer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fonts & Favicon -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico">
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<!-- AOS Animations -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter, Arial, sans-serif;
+  background: linear-gradient(135deg,#d4af37 0%,#b8860b 50%,#5b3a29 100%);
+  color:#2b1f18;transition:background 0.6s,color 0.3s;
+}
+
+header{background:#5b3a29;color:#fff;text-align:center;padding:80px 20px;position:relative;overflow:hidden;}
+header h1{font-size:40px;animation:slideDown 1s;}
+/* Title appear/disappear */
+#nameText{display:inline-block;animation:nameFade 4s ease-in-out infinite}
+@keyframes nameFade{0%{opacity:0;transform:translateY(-10px)}10%{opacity:1;transform:translateY(0)}90%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+header p{margin-top:10px;font-size:20px;}
+@keyframes slideDown{0%{transform:translateY(-50px);opacity:0;}100%{transform:translateY(0);opacity:1;}}
+@keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+nav{background:#5a3522;display:flex;justify-content:center;flex-wrap:wrap;position:sticky;top:0;z-index:100;}
+nav a{color:#fff;padding:12px 20px;text-decoration:none;transition:0.25s;font-weight:600;border-radius:6px;margin:6px}
+nav a:hover{background:rgba(255,255,255,0.06)}
+nav a.active{background:linear-gradient(90deg,#d4af37,#b8860b);box-shadow:0 6px 18px rgba(91,58,41,0.18)}
+
+.cards{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-top:18px}
+
+/* Steps / About Me */
+.steps{list-style:none;max-width:820px;margin:20px auto;padding:0;counter-reset:step}
+.steps li{counter-increment:step;background:rgba(255,255,255,0.95);margin:12px 0;padding:16px;border-radius:12px;box-shadow:0 8px 20px rgba(15,30,60,0.06);display:flex;gap:12px;align-items:flex-start}
+.steps li::before{content:counter(step);min-width:44px;height:44px;border-radius:50%;background:linear-gradient(90deg,#d4af37,#b8860b);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:12px}
+.steps li h4{margin:0;font-size:18px}
+.steps li p{margin:6px 0 0;color:#333}
+
+section{max-width:1000px;margin:auto;padding:60px 20px;text-align:center;opacity:0;transition:opacity 0.6s;display:none}
+section.active{display:block;opacity:1}
+
+.card{
+background:#fff;padding:25px;margin:15px;border-radius:15px;
+display:inline-block;width:260px;box-shadow:0 10px 25px rgba(0,0,0,.15);
+transition:transform 0.3s, box-shadow 0.3s;text-align:left;
+}
+.card img{border-radius:12px;margin-bottom:10px;width:100%;}
+.card i{font-size:30px;color:#b8860b;margin-bottom:10px;display:block;}
+.card:hover{transform:translateY(-10px);box-shadow:0 15px 35px rgba(0,0,0,.2)}
+
+button{
+background:linear-gradient(45deg,#d4af37,#b8860b);
+color:#2b1f18;border:none;padding:12px 25px;border-radius:10px;font-size:16px;cursor:pointer;margin:10px;transition:0.3s;
+display:inline-flex;align-items:center;gap:8px;
+}
+button:hover{background:linear-gradient(45deg,#b8860b,#8b5a17);transform:scale(1.05)}
+
+form{max-width:500px;margin:auto}
+input,select,textarea{
+width:100%;padding:12px;margin:10px 0;border-radius:5px;border:1px solid #ccc;transition:0.3s;
+}
+input:focus,select:focus,textarea:focus{border-color:#b8860b;outline:none;box-shadow:0 0 10px rgba(212,175,55,.25)}
+
+footer{background:#5b3a29;color:white;text-align:center;padding:20px;margin-top:40px}
+
+.counter{font-weight:bold;margin-top:10px;font-size:18px}
+
+.whatsapp{
+position:fixed;bottom:20px;right:20px;
+background:#25D366;color:white;padding:15px 20px;
+border-radius:50px;text-decoration:none;font-weight:bold;box-shadow:0 5px 15px rgba(0,0,0,.2);transition:0.3s;z-index:200;
+animation:pulse 2s infinite;display:flex;align-items:center;gap:5px;
+}
+.whatsapp:hover{transform:scale(1.1)}
+
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
+
+.testimonial-card{
+background:#fff;padding:20px;margin:15px;border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+display:inline-block;width:300px;transition:transform 0.3s;text-align:left;
+}
+.testimonial-card p{font-style:italic;}
+.testimonial-card:hover{transform:translateY(-8px)}
+
+.dark-mode{background:#111;color:#eee}
+.dark-mode header{background:#222}
+.dark-mode nav{background:#333}
+.dark-mode footer{background:#222}
+.dark-mode .card, .dark-mode .testimonial-card{background:#222;color:#eee}
+
+@media(max-width:768px){.card,.testimonial-card{width:90%}}
+
+/* About section layout and step images */
+.about-grid{display:flex;gap:28px;align-items:center;max-width:1000px;margin:20px auto;padding:10px}
+.about-img{flex:0 0 280px;border-radius:16px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,0.12)}
+.about-img img{width:100%;height:100%;object-fit:cover;display:block}
+.about-content{flex:1;text-align:left}
+.about-content p{line-height:1.6;color:#2b1f18;margin-top:8px}
+.step-img{width:88px;height:88px;border-radius:12px;object-fit:cover;flex:0 0 88px}
+@media(max-width:768px){.about-grid{flex-direction:column}.step-img{width:64px;height:64px}}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1><span id="nameText">Godwin Ebuka</span></h1>
+<p>Web Developer | Business & Portfolio Websites</p>
+<p class="counter">Registrations: <span id="count">0</span></p>
+<button aria-label="Toggle Dark Mode" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> Dark Mode</button>
+</header>
+
+<nav>
+  <a href="#" class="nav-link active" data-target="home" onclick="show('home')"><i class="fas fa-home"></i> Home</a>
+  <a href="#" class="nav-link" data-target="about" onclick="show('about')"><i class="fas fa-user"></i> About</a>
+  <a href="#" class="nav-link" data-target="what" onclick="show('what')"><i class="fas fa-list"></i> What I Do</a>
+  <a href="#" class="nav-link" data-target="services" onclick="show('services')"><i class="fas fa-concierge-bell"></i> Services</a>
+  <a href="#" class="nav-link" data-target="portfolio" onclick="show('portfolio')"><i class="fas fa-briefcase"></i> Portfolio</a>
+  <a href="#" class="nav-link" data-target="testimonials" onclick="show('testimonials')"><i class="fas fa-star"></i> Testimonials</a>
+  <a href="#" class="nav-link" data-target="contact" onclick="show('contact')"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+<!-- HOME -->
+<section id="home" class="active" data-aos="fade-up">
+<h2>Welcome 👋</h2>
+<p>I build modern, responsive, client-ready websites for businesses and professionals.</p>
+<button onclick="toggleMusic()"><i class="fas fa-music"></i> Toggle Music</button><br>
+<button onclick="show('contact')"><i class="fas fa-handshake"></i> Hire Me</button>
+</section>
+
+<!-- ABOUT -->
+<!-- ABOUT -->
+<section id="about" data-aos="fade-right">
+<h2>About Me</h2>
+<div class="about-grid">
+  <div class="about-img">
+    <img src="https://media.istockphoto.com/id/2178014330/photo/happy-african-guy-with-laptop-over-studio-background.jpg?s=612x612&w=0&k=20&c=ymtjHPvmUT8nF4knR_xxI2iHLgdNm5RnBTDuVW16VGg=" alt="">
+    </div>
+  <div class="about-content">
+    <p>I am a passionate web developer creating professional business and portfolio websites using HTML, CSS, and JavaScript. I focus on modern design, responsiveness, and usability.</p>
+    <p>I build accessible, SEO-conscious websites and help clients grow online through clean design and fast performance.</p>
+  </div>
+</div>
+</section>
+
+<!-- About Me -->
+<section id="what" data-aos="fade-right">
+<h2>About Me</h2>
+<ul class="steps">
+  <li>
+    <img class="step-img" src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80" alt="Business - computer">
+    <div>
+      <h4>Business Websites</h4>
+      <p>Create responsive, accessible, and SEO-friendly websites for companies and agencies.</p>
+    </div>
+  </li>
+  <li>
+    <img class="step-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80" alt="Portfolio">
+    <div>
+      <h4>Portfolio Sites</h4>
+      <p>I Design modern portfolio websites to showcase projects and skills.</p>
+    </div>
+  </li>
+  <li>
+    <img class="step-img" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80" alt="Landing">
+    <div>
+      <h4>Landing Pages</h4>
+      <p>Build high-conversion landing pages for campaigns and product launches.</p>
+    </div>
+  </li>
+  <li>
+    <img class="step-img" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" alt="Design">
+    <div>
+      <h4>Graphic & UI Design</h4>
+      <p>Design custom graphics, logos, and UI elements to enhance website aesthetics.</p>
+    </div>
+  </li>
+  <li>
+    <img class="step-img" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=80" alt="Other">
+    <div>
+      <h4>Other Interests</h4>
+      <p>E-commerce, performance optimization, and SEO improvements.</p>
+      <div>
+      <h4>Clothing Design</h4>
+      <p>We sell high quality clothing of all kinds such as T-shirts, hoodies, jackets, jeans, skirts, dresses, shoes, and bags.</p>
+    </div>
+  </li>
+
+</ul>
+</section>
+
+<!-- SERVICES -->
+<section id="services" data-aos="fade-left">
+<h2>Services</h2>
+<div class="cards">
+  <div class="card"><i class="fas fa-building"></i><h3>Business Website</h3><p>Professional presence for your company.</p></div>
+  <div class="card"><i class="fas fa-briefcase"></i><h3>Portfolio Website</h3><p>Showcase your skills and projects.</p></div>
+  <div class="card"><i class="fas fa-bolt"></i><h3>Landing Page</h3><p>High-converting pages for campaigns or products.</p></div>
+</div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" data-aos="fade-up">
+<h2>Portfolio</h2>
+<div class="cards">
+  <div class="card"><i class="fas fa-code"></i><h3>Mini Website</h3><p>HTML, CSS, JS project example.</p></div>
+  <div class="card"><i class="fas fa-laptop-code"></i><h3>Landing Page</h3><p>Client-ready responsive landing page.</p></div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" data-aos="zoom-in">
+<h2>Testimonials</h2>
+<div class="cards">
+  <div class="testimonial-card"><p>“Amazing work! Very professional web Developer. All Thank To You!”</p><strong>– Client A</strong></div>
+  <div class="testimonial-card"><p>“Godwin built my online store exactly how i imagined it Wow.Thank You Very Much!”</p><strong>– Client B</strong></div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" data-aos="fade-up">
+<h2>Register / Contact</h2>
+
+<form id="contactForm" onsubmit="startVerification(event)">
+  <input id="name" name="name" type="text" placeholder="Your Name" required>
+  <input id="email" name="email" type="email" placeholder="Your Email" required>
+  <input id="phone" name="phone" type="tel" placeholder="Your Phone Number" pattern="[0-9]{10,15}" required>
+  <select id="service" name="service" required>
+    <option value="">Select Service</option>
+    <option>Business Website</option>
+    <option>Portfolio Website</option>
+    <option>Landing Page</option>
+    <option>Graphic design</option>
+  </select>
+  <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+  <button type="submit"><i class="fas fa-paper-plane"></i> Send Verification Code</button>
+</form>
+
+<div id="verifySection" style="display:none;margin-top:20px;">
+  <input id="verifyCodeInput" name="verifyCodeInput" type="text" placeholder="Enter Verification Code">
+  <button onclick="verifyCode()"><i class="fas fa-check"></i> Verify Code</button>
+  <p id="verificationMsg"></p>
+</div>
+</section>
+
+
+
+
+<footer>
+© 2026 Godwin Ebuka | All Rights Reserved
+
+<!-- WhatsApp -->
+<a class="whatsapp" href="https://wa.me/2349138258792" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({duration:1000,easing:'ease-in-out',once:true});
+
+/* NAVIGATION */
+function show(id){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  // update nav active state
+  document.querySelectorAll('nav a.nav-link').forEach(a=>a.classList.remove('active'));
+  const activeLink = document.querySelector(`nav a[data-target="${id}"]`);
+  if(activeLink) activeLink.classList.add('active');
+  AOS.refresh(); 
+}
+
+/* REGISTRATION COUNTER */
+let count = parseInt(localStorage.getItem("count")) || 0;
+document.getElementById("count").innerText = count;
+
+/* EMAILJS INIT */
+emailjs.init("YOUR_PUBLIC_KEY");
+
+/* PHONE VERIFICATION SYSTEM */
+let generatedCode = null;
+function startVerification(e){
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const service = document.getElementById('service').value;
+  const message = document.getElementById('message').value;
+  generatedCode = Math.floor(100000 + Math.random()*900000);
+
+  const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+  if(submitBtn){ submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...'; }
+
+  emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+    from_name:name,
+    from_email:email,
+    from_phone:phone,
+    service:service,
+    message:message,
+    verification_code:generatedCode,
+    to_email:"gebuka748@gmail.com"
+  }).then(()=>{
+    if(submitBtn){ submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHtml; }
+    document.getElementById('verifySection').style.display='block';
+    document.getElementById('verificationMsg').innerText=`Hi ${name}, a verification code was sent to your email.`;
+    console.log("Verification email sent");
+  }).catch(err=>{
+    if(submitBtn){ submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHtml; }
+    document.getElementById('verificationMsg').innerText='❌ Error sending verification. Please try again later.';
+    console.error(err);
+  });
+}
+function verifyCode(){
+  const userCode = document.getElementById('verifyCodeInput').value;
+  if(userCode==String(generatedCode) || userCode==generatedCode){
+    document.getElementById('verificationMsg').innerText="✅ Verified! Registration complete.";
+    count++; localStorage.setItem("count",count);
+    document.getElementById("count").innerText=count;
+    document.getElementById('contactForm').reset();
+    document.getElementById('verifySection').style.display='none';
+  } else {
+    document.getElementById('verificationMsg').innerText="❌ Wrong code, try again.";
+  }
+}
+
+/* MUSIC */
+let playing=false;
+function toggleMusic(){
+  const m=document.getElementById("bgMusic");
+  playing?m.pause():m.play();
+  playing=!playing;
+}
+
+/* DARK MODE */
+function toggleDarkMode(){
+  document.body.classList.toggle("dark-mode");
+}
+
+</script>
+<!-- Ensure About image is a chosen male portrait (local preferred, then two fixed fallbacks) -->
+<script>
+async function ensureMaleAboutImage(){
+  const img = document.getElementById('aboutPhoto');
+  if(!img) return;
+  const local = 'assets/about-man.jpg';
+  const fallbacks = [
+    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1545996124-1b89f1a9f6d9?auto=format&fit=crop&w=800&q=80'
+  ];
+
+  // If local file exists, use it (gives you full control over the photo)
+  try{
+    const res = await fetch(local, {method:'HEAD'});
+    if(res.ok){ img.src = local; return; }
+  }catch(e){ /* ignore */ }
+
+  // ensure current src is one of our approved male fallbacks
+  let idx = 0;
+  img.onerror = function(){
+    idx++;
+    if(idx < fallbacks.length){ img.src = fallbacks[idx]; }
+  };
+  // if image loads but is replaced by a different photo (rare), we still only use our approved srcs
+  img.onload = function(){ if(!fallbacks.includes(img.src) && img.src !== location.origin + '/' + local){ img.src = fallbacks[0]; } };
+  // set initial approved src if not already set
+  if(!fallbacks.includes(img.src)) img.src = fallbacks[0];
+}
+ensureMaleAboutImage();
+</script>
+</body>
+</html>
